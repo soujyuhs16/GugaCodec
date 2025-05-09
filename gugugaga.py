@@ -20,30 +20,29 @@ class GugaEncoder:
         self.char_to_index = {char: idx for idx, char in enumerate(str_set)}
         self.index_to_char = {idx: char for idx, char in enumerate(str_set)}
 
-    def encode(self, s: str) -> str:
+    def encode(self, raw_str: str) -> str:
         """
         将输入字符串进行编码，输出由字符集组成的编码字符串。
 
         :param s: 原始字符串
         :return: 编码后的字符串
         """
-        byte_data = s.encode("utf-8")
+        byte_data = raw_str.encode("utf-8")
         encoded = ""
 
-        for b in byte_data:
+        for byte in byte_data:
             digits = []
-            num = b
-            if num == 0:
+            if byte == 0:
                 digits = [0]
             else:
-                while num > 0:
-                    digits.append(num % self.len_charset)
-                    num //= self.len_charset
+                while byte > 0:
+                    digits.append(byte % self.len_charset)
+                    byte //= self.len_charset
             digits.reverse()
 
             encoded += "".join([self.index_to_char[d] for d in digits]) + self.separator
 
-        return encoded.strip()
+        return encoded.strip()[:-1]
 
     def decode(self, encoded: str) -> str:
         """
@@ -52,6 +51,8 @@ class GugaEncoder:
         :param encoded: 编码后的字符串
         :return: 解码后的原始字符串 或 错误信息
         """
+        if encoded == "":
+            return ""
         part_list = encoded.split(self.separator)
         byte_list = []
 
@@ -62,18 +63,19 @@ class GugaEncoder:
                 num = num * self.len_charset + digit
             byte_list.append(num)
 
-        try:
-            return bytes(byte_list).decode("utf-8")
-        except UnicodeDecodeError:
-            return f"byte_list:{byte_list}"
+        return bytes(byte_list).decode("utf-8")
 
 
-# 测试部分
-if __name__ == "__main__":
+def codec_test():
     encoder = GugaEncoder()
     s = "我喜欢你。"
     print(f"原始字符串：{s}")
     encoded = encoder.encode(s)
     print(f"编码后：{encoded}")
     decoded = encoder.decode(encoded)
-    print(f"解码后：{decoded}")
+    print(f"解码后：{repr(decoded)}")
+
+
+# 测试部分
+if __name__ == "__main__":
+    codec_test()
