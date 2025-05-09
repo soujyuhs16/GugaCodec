@@ -4,21 +4,21 @@ class GugaEncoder:
     编码基于五进制转换，并使用指定分隔符分隔字节单元。
     """
 
-    def __init__(self, str_set: str = "咕嘎灵感菇", separator: str = "⭐"):
+    def __init__(self, charset: str, separator: str):
         """
         初始化编码器所需的字符集和分隔符。
 
         :param str_set: 字符集,用于从0~n映射具体字符
         :param separator: 编码中使用的分隔符
         """
-        assert separator not in str_set, "分隔符不能在字符集中"
+        assert separator not in charset, "分隔符不能在字符集中"
 
-        self.str_set = str_set
+        self.str_set = charset
         self.separator = separator
-        self.len_charset = len(str_set)
+        self.len_charset = len(charset)
 
-        self.char_to_index = {char: idx for idx, char in enumerate(str_set)}
-        self.index_to_char = {idx: char for idx, char in enumerate(str_set)}
+        self.char_to_index = {char: idx for idx, char in enumerate(charset)}
+        self.index_to_char = {idx: char for idx, char in enumerate(charset)}
 
     def encode(self, raw_str: str) -> str:
         """
@@ -67,7 +67,7 @@ class GugaEncoder:
 
 
 def codec_test():
-    encoder = GugaEncoder()
+    encoder = GugaEncoder(charset="咕嘎灵感菇", separator="⭐")
     s = "我喜欢你。"
     print(f"原始字符串：{s}")
     encoded = encoder.encode(s)
