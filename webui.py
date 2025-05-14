@@ -20,6 +20,8 @@ if __name__ == "__main__":
         ("编码", "解码"),
     )
 
+    st.markdown("## 在输入框回车以查看输出")
+
     if func_type == "编码":
         raw_str = st.text_input(label="请输入需要编码的字符串", value="我喜欢你")
         st.markdown("## 编码结果：")
