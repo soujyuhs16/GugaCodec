@@ -11,8 +11,8 @@ if __name__ == "__main__":
     st.set_page_config(page_title="灵感菇编码器", page_icon="./MyGO_icon.svg")
     st.title("灵感菇编码器")
 
-    charset = st.text_input("请输入不重复的字符集：", value="咕嘎灵感菇")
-    separator = st.text_input("请输入分隔符：", value="⭐")
+    charset = st.text_input("请输入不重复的字符集：", value="咕嘎")
+    separator = st.text_input("请输入分隔符：", value="~")
     codec = get_codec(charset, separator)
 
     func_type = st.sidebar.radio(
