@@ -67,7 +67,7 @@ class GugaEncoder:
 
 
 def codec_test():
-    encoder = GugaEncoder(charset="咕嘎灵感菇", separator="⭐")
+    encoder = GugaEncoder(charset="咕嘎", separator="~")
     s = "我喜欢你。"
     print(f"原始字符串：{s}")
     encoded = encoder.encode(s)
